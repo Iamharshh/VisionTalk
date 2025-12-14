@@ -90,11 +90,18 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-#Configure Google API
-load_dotenv()
-api_key = os.getenv("GOOGLE_API_KEY")
+# Configure Google API (Securely handles both Cloud and Local)
+try:
+    # 1. Try loading from Streamlit Secrets (Required for Cloud Deployment)
+    api_key = st.secrets["GEMINI_API_KEY"]
+except (FileNotFoundError, KeyError):
+    # 2. Fallback to local .env file (For running on your laptop)
+    load_dotenv()
+    api_key = os.getenv("GEMINI_API_KEY")
+
+# Stop if key is still missing
 if not api_key:
-    st.warning("API Key not found. Please set the GOOGLE_API_KEY environment variable in your .env file.")
+    st.error("API Key not found! Please check your Streamlit Secrets (Cloud) or .env file (Local).")
     st.stop()
 
 genai.configure(api_key=api_key)
