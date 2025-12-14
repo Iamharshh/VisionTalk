@@ -108,7 +108,7 @@ genai.configure(api_key=api_key)
 
 #Function to load Gemini model and generate response
 def get_response(input_text, image_data):
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     if input_text and image_data:
         response = model.generate_content([input_text, image_data])
     elif image_data:
@@ -159,7 +159,8 @@ with chat_container:
             st.markdown(message["content"])
 
 # Chat Input
-if prompt := st.chat_input("Ask something about the image..."):
+prompt = st.chat_input("Ask something about the image...")
+if prompt:
     # Display User Message
     with chat_container: # Add new message to the container
         with st.chat_message("user", avatar=USER_AVATAR):
