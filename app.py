@@ -108,7 +108,7 @@ genai.configure(api_key=api_key)
 
 #Function to load Gemini model and generate response
 def get_response(input_text, image_data):
-    model = genai.GenerativeModel("gemini-2.0-flash")
+    model = genai.GenerativeModel("gemini-1.5-flash")
     if input_text and image_data:
         response = model.generate_content([input_text, image_data])
     elif image_data:
